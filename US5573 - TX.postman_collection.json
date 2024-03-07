@@ -1,0 +1,807 @@
+{
+	"info": {
+		"_postman_id": "6eb35d38-1f03-4897-8199-98165a99c34b",
+		"name": "US5573 - TX",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32056885",
+		"_collection_link": "https://martian-zodiac-546650.postman.co/workspace/UPEXBootcamp~68636a9d-bb29-48aa-a2fb-f653e8ef11fe/collection/32056885-6eb35d38-1f03-4897-8199-98165a99c34b?action=share&source=collection_link&creator=32056885"
+	},
+	"item": [
+		{
+			"name": "US 5573 - TS1",
+			"item": [
+				{
+					"name": "US 5573 - Precondicion - La lista Backlog debe estar disponible",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Precondicion: Lista Backlog deberia estar disponible\",()=>{\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"const body =pm.response.json()\r",
+									"pm.test(\"Precondicion: Lista deberia tener el nombre de Backlog\",()=>\r",
+									"    pm.expect(body.name).to.include(\"BACKLOG\")\r",
+									")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GETlist}}/:id?key={{key}}&token={{token}}",
+							"host": [
+								"{{GETlist}}"
+							],
+							"path": [
+								":id"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{ListA}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US 5573 - Precondicion- La lista Active debe estar disponible",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Precondicion: Lista Active deberia estar disponible\",()=>{\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"const body =pm.response.json()\r",
+									"pm.test(\"Precondicion: Lista deberia tener el nombre de Backlog\",()=>\r",
+									"    pm.expect(body.name).to.include(\"ACTIVE\")\r",
+									")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GETlist}}/:id?key={{key}}&token={{token}}",
+							"host": [
+								"{{GETlist}}"
+							],
+							"path": [
+								":id"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{ListB}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US 5573 - PrecondicionLa lista DONE debe estar disponible",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Precondicion: Lista Done deberia estar disponible\",()=>{\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"const body =pm.response.json()\r",
+									"pm.test(\"Precondicion: Lista deberia tener el nombre de Backlog\",()=>\r",
+									"    pm.expect(body.name).to.include(\"DONE\")\r",
+									")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GETlist}}/:id?key={{key}}&token={{token}}",
+							"host": [
+								"{{GETlist}}"
+							],
+							"path": [
+								":id"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{ListC}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US 5573 - TS1 - TC1 -Validar crear Card A en la lista de la Tabla como primera card de la lista",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const randomName = pm.variables.replaceIn(\"[{$randomBankAccountName}]\")\r",
+									"pm.collectionVariables.set(\"cardrandomName\", randomName)\r",
+									"\r",
+									"//pm.variables.get(\"$randomBankAccountName\")"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Validar Card deberia estar creada en la lista Backlog\", ()=>\r",
+									"    pm.response.to.have.status(200),\r",
+									"    pm.expect(body.idList).to.eql(pm.environment.get(\"ListA\"))\r",
+									")\r",
+									"\r",
+									"pm.test(\"Validar nombre de la Card sea el Valor ingresado previamente\", ()=>\r",
+									"    pm.expect(body.name).to.eql(pm.collectionVariables.get(\"cardrandomName\"))\r",
+									")\r",
+									"\r",
+									"const idCard = body.id\r",
+									"pm .collectionVariables.set(\"idCardA\", idCard)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{POSTcard}}?idList={{ListA}}&name={{cardrandomName}}&key={{key}}&token={{token}}",
+							"host": [
+								"{{POSTcard}}"
+							],
+							"query": [
+								{
+									"key": "idList",
+									"value": "{{ListA}}"
+								},
+								{
+									"key": "name",
+									"value": "{{cardrandomName}}"
+								},
+								{
+									"key": "key",
+									"value": "{{key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US 5573 - TS1 - TC2 - Validar crear Card B en la lista de la Tabla como SEGUNDA card de la lista",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const randomName = pm.variables.replaceIn(\"[{$randomBankAccountName}]\")\r",
+									"pm.collectionVariables.set(\"cardrandomName\", randomName)\r",
+									"\r",
+									"//pm.variables.get(\"$randomBankAccountName\")"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body =pm.response.json()\r",
+									"\r",
+									"pm.test(\"Validar Card deberia estar creada en la lista Backlog\", ()=>\r",
+									"    pm.response.to.have.status(200),\r",
+									"    pm.expect(body.idList).to.eql(pm.environment.get(\"ListA\"))\r",
+									")\r",
+									"\r",
+									"pm.test(\"Validar nombre de la Card sea el Valor ingresado previamente\", ()=>\r",
+									"    pm.expect(body.name).to.eql(pm.collectionVariables.get(\"cardrandomName\"))\r",
+									")\r",
+									"\r",
+									"const idCard = body.id\r",
+									"pm .collectionVariables.set(\"idCardB\", idCard)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{POSTcard}}?idList={{ListA}}&name={{cardrandomName}}&key={{key}}&token={{token}}",
+							"host": [
+								"{{POSTcard}}"
+							],
+							"query": [
+								{
+									"key": "idList",
+									"value": "{{ListA}}"
+								},
+								{
+									"key": "name",
+									"value": "{{cardrandomName}}"
+								},
+								{
+									"key": "key",
+									"value": "{{key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "US 5573 - TS2",
+			"item": [
+				{
+					"name": "US 5573 - TS2 - TC3 - Validar poder cambiar los caampos basicos de una card",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const newrandomName = pm.variables.replaceIn(\"[{randomCurrencyName}]\")\r",
+									"pm.collectionVariables.set(\"cardrandomName\", newrandomName)\r",
+									"\r",
+									"const newrandomDesc = pm.variables.replaceIn(\"[{randomPhrase}]\")\r",
+									"pm.collectionVariables.set(\"cardrandomDesc\", newrandomDesc)\r",
+									"\r",
+									"//pm.variables.get(\"$randomPhrase\")"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json()\r",
+									"const randomName = pm.collectionVariables.get(\"cardrandomName\")\r",
+									"const randomDesc = pm.collectionVariables.get(\"cardrandomDesc\")\r",
+									"const idLabel = pm.environment.get(\"labelNew\")\r",
+									"const labelNew = body.labels[0].id\r",
+									"\r",
+									"pm.test(\"Nombre de la card deberia ser modificada\", ()=>\r",
+									"    pm.expect(body.name).to.eql(randomName)\r",
+									")\r",
+									"pm.test(\"Descripcion de la card deberia ser modificada\", ()=>\r",
+									"    pm.expect(body.desc).to.eql(randomDesc)\r",
+									")\r",
+									"pm.test(\"CArd deberia tener la etiqueta NEW\", ()=>\r",
+									"    pm.expect(labelNew).to.eql(idLabel)\r",
+									")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{PUTcard}}/:id?key={{key}}&token={{token}}&name={{cardrandomName}}&desc={{cardrandomDesc}}&pos=top&idLabels={{labelNew}}",
+							"host": [
+								"{{PUTcard}}"
+							],
+							"path": [
+								":id"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								},
+								{
+									"key": "name",
+									"value": "{{cardrandomName}}"
+								},
+								{
+									"key": "desc",
+									"value": "{{cardrandomDesc}}"
+								},
+								{
+									"key": "pos",
+									"value": "top"
+								},
+								{
+									"key": "idLabels",
+									"value": "{{labelNew}}"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{idCardA}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "US 5573 - TS3",
+			"item": [
+				{
+					"name": "US 5573 - TS3 - TC4 - Validar mover la card A a la siguiente lista ACTIVE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json()\r",
+									"const ActiveList = pm.environment.get(\"ListB\")\r",
+									"\r",
+									"pm.test(\"Card deberia estar en la lista ACTIVE\", ()=>\r",
+									"    pm.expect(body.idList).to.eql(ActiveList)\r",
+									")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{PUTcard}}/:id?idList={{ListB}}&key={{key}}&token={{token}}",
+							"host": [
+								"{{PUTcard}}"
+							],
+							"path": [
+								":id"
+							],
+							"query": [
+								{
+									"key": "idList",
+									"value": "{{ListB}}"
+								},
+								{
+									"key": "key",
+									"value": "{{key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{idCardA}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US 5573 - TS3 - TC5 - Validar mover la card A a la siguiente lista DONE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json()\r",
+									"const DoneList = pm.environment.get(\"ListC\")\r",
+									"\r",
+									"pm.test(\"Card deberia estar en la lista DONE\", ()=>\r",
+									"    pm.expect(body.idList).to.eql(DoneList)\r",
+									")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{PUTcard}}/:id?idList={{ListC}}&key={{key}}&token={{token}}",
+							"host": [
+								"{{PUTcard}}"
+							],
+							"path": [
+								":id"
+							],
+							"query": [
+								{
+									"key": "idList",
+									"value": "{{ListC}}"
+								},
+								{
+									"key": "key",
+									"value": "{{key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{idCardA}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "US 5573 - TS4",
+			"item": [
+				{
+					"name": "PRECONDICION card no debe estar archivada",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Card no deberia estar archivada\",()=>\r",
+									"    pm.expect(body.closed).to.be.false\r",
+									")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GETcard}}/:id?key={{key}}&token={{token}}",
+							"host": [
+								"{{GETcard}}"
+							],
+							"path": [
+								":id"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{idCardB}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US 5573 - TS4 - TC6 - Validar Archivar Card A en el tablero",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Card deberia estar archivada\",()=>\r",
+									"    pm.expect(body.closed).to.be.true\r",
+									")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{PUTcard}}/:id?key={{key}}&token={{token}}&closed=true",
+							"host": [
+								"{{PUTcard}}"
+							],
+							"path": [
+								":id"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								},
+								{
+									"key": "closed",
+									"value": "true"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{idCardB}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US 5573 - TS4 - TC7 - Validar Dejar de Archivar Card A del tablero cuando estaba archivada",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Card ya no deberia estar archivada\",()=>\r",
+									"    pm.expect(body.closed).to.be.false\r",
+									")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{PUTcard}}/:id?key={{key}}&token={{token}}&closed=false",
+							"host": [
+								"{{PUTcard}}"
+							],
+							"path": [
+								":id"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								},
+								{
+									"key": "closed",
+									"value": "false"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{idCardB}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US 5573 - TS4 - TC7 - Validar Dejar de Archivar Card A del tablero cuando estaba archivada Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Card deberia estar eliminada\",()=>\r",
+									"    pm.response.to.have.status(200)\r",
+									")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{DELcard}}/:id?key={{key}}&token={{token}}",
+							"host": [
+								"{{DELcard}}"
+							],
+							"path": [
+								":id"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{idCardB}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US 5573 - TS4 - TC8 - Card B no deberia existir",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Card deberia estar archivada\",()=>\r",
+									"    pm.response.to.have.status(404)\r",
+									")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GETcard}}/:id?key={{key}}&token={{token}}",
+							"host": [
+								"{{GETcard}}"
+							],
+							"path": [
+								":id"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{idCardB}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "cardrandomName",
+			"value": ""
+		},
+		{
+			"key": "idCardA",
+			"value": ""
+		},
+		{
+			"key": "cardrandomDesc",
+			"value": ""
+		},
+		{
+			"key": "idCardB",
+			"value": ""
+		}
+	]
+}
